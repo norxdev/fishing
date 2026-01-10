@@ -1,0 +1,11 @@
+{
+  "name": "fishing-blog",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "astro": "^4.0.0"
+  }
+}
