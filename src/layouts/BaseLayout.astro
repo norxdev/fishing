@@ -1,24 +1,22 @@
 ---
-// BaseLayout.astro
-const { title = '', description = '' } = Astro.props;
+const { title, description } = Astro.props;
 ---
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <header>
-      <div class="header-container">
-        <h1 class="site-title"><a href="/fishing">Top Water Angler</a></h1>
-        <nav class="site-nav">
-          <a href="/fishing">Home</a>
-          <a href="/fishing/blog">Blog</a>
-        </nav>
-      </div>
+      <a href="/fishing">Top Water Angler</a>
+      <nav>
+        <a href="/fishing">Home</a>
+        <a href="/fishing/blog">Blog</a>
+      </nav>
     </header>
 
     <main>
@@ -26,9 +24,7 @@ const { title = '', description = '' } = Astro.props;
     </main>
 
     <footer>
-      <div class="footer-container">
-        <p>&copy; {new Date().getFullYear()} Top Water Angler. All rights reserved.</p>
-      </div>
+      &copy; {new Date().getFullYear()} Top Water Angler
     </footer>
   </body>
 </html>
