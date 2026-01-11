@@ -20,11 +20,13 @@ if (!post) {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article>
+  <article class="blog-post">
     <div class="post-header">
       <img src={post.data.image || "https://source.unsplash.com/900x400/?fishing"} alt={post.data.title} />
       <h1>{post.data.title}</h1>
-      <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+      <p class="post-date">
+        {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString() : ''}
+      </p>
     </div>
 
     <div class="post-content">
