@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// --- Generate static paths for all blog posts ---
+// --- Generate static paths ---
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
@@ -20,17 +20,15 @@ if (!post) {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="blog-post">
+  <article>
     <div class="post-header">
       <img src={post.data.image || "https://source.unsplash.com/900x400/?fishing"} alt={post.data.title} />
       <h1>{post.data.title}</h1>
-      <p class="post-date">
-        {post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString() : ''}
-      </p>
+      <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
     </div>
 
     <div class="post-content">
-      {await post.render()} <!-- <- This renders the Markdown/MDX content -->
+      <Astro.content post={post} />
     </div>
   </article>
 </BaseLayout>
