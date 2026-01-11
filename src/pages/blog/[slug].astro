@@ -11,40 +11,30 @@ export async function getStaticPaths() {
   }));
 }
 
+// Find the post
 const post = await getCollection('blog').then(posts =>
   posts.find(p => p.slug === slug)
 );
 
 if (!post) throw new Error(`Post not found: ${slug}`);
+
+// Render the Markdown content
+const renderedContent = await Astro.renderContent(post.body);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article style="max-width:800px; margin:auto; padding:2rem; background:white; border-radius:0.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.08); line-height:1.8; font-family: 'Helvetica Neue', sans-serif;">
-
     <h1 style="margin-bottom:0.5rem; font-size:2.5rem;">{post.data.title}</h1>
     <p style="color:#777; margin-bottom:1.5rem;">Published on {post.data.publishDate}</p>
 
     {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; margin:1rem 0;" />}
 
     <div class="markdown-body">
-      <Content content={post} />
+      {renderedContent}
     </div>
 
     <p style="margin-top:3rem;">
       <a href="/fishing/" style="font-weight:bold; color:#00c49f;">← Back to Home</a>
     </p>
-
-    <style>
-      .markdown-body h2 { font-size:1.8rem; margin-top:2rem; color:#0070f3; }
-      .markdown-body h3 { font-size:1.4rem; margin-top:1.5rem; color:#0070f3; }
-      .markdown-body p { margin-bottom:1rem; }
-      .markdown-body ul, .markdown-body ol { margin:1rem 0 1rem 2rem; }
-      .markdown-body blockquote { margin:1.5rem 0; padding:1rem 1.5rem; background:#f9f9f9; border-left:4px solid #00c49f; font-style:italic; color:#555; }
-      .markdown-body pre { background:#f4f4f4; padding:1rem; border-radius:0.4rem; overflow-x:auto; }
-      .markdown-body code { background:#f4f4f4; padding:0.2rem 0.4rem; border-radius:0.3rem; font-family:monospace; }
-      .markdown-body img { max-width:100%; margin:1rem 0; border-radius:0.3rem; }
-      .markdown-body a { color:#00c49f; text-decoration:none; }
-      .markdown-body a:hover { text-decoration:underline; }
-    </style>
   </article>
 </BaseLayout>
