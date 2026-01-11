@@ -2,10 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Get all blog posts
 const posts = await getCollection('blog');
 
-// Sort newest first
 const sortedPosts = posts
   .filter(post => !post.data.draft)
   .sort(
@@ -14,9 +12,9 @@ const sortedPosts = posts
       new Date(a.data.publishDate).getTime()
   );
 
-// Homepage sections
 const featured = sortedPosts.slice(0, 1);
 const latest = sortedPosts.slice(1, 5);
+const base = import.meta.env.BASE_URL; // <-- ensures /fishing is prepended
 ---
 
 <BaseLayout
@@ -31,7 +29,7 @@ const latest = sortedPosts.slice(1, 5);
         Seasonal fishing tactics, gear breakdowns, and real-world advice
         for anglers who want to catch more fish — not just read about it.
       </p>
-      <a href={`${import.meta.env.BASE_URL}blog`} class="btn-primary">
+      <a href={`${base}blog/`} class="btn-primary">
         Read the Blog
       </a>
     </div>
@@ -41,7 +39,6 @@ const latest = sortedPosts.slice(1, 5);
   {featured.length > 0 && (
     <section class="featured">
       <h2>Featured</h2>
-
       <article class="featured-card">
         <img
           src={featured[0].data.image}
@@ -52,7 +49,7 @@ const latest = sortedPosts.slice(1, 5);
           <h3>{featured[0].data.title}</h3>
           <p>{featured[0].data.description}</p>
           <a
-            href={`${import.meta.env.BASE_URL}blog/${featured[0].slug}/`}
+            href={`${base}blog/${featured[0].slug}/`}
             class="read-more"
           >
             Read Article →
@@ -78,7 +75,7 @@ const latest = sortedPosts.slice(1, 5);
             <h3>{post.data.title}</h3>
             <p>{post.data.description}</p>
             <a
-              href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}
+              href={`${base}blog/${post.slug}/`}
               class="read-more"
             >
               Read →
@@ -89,9 +86,7 @@ const latest = sortedPosts.slice(1, 5);
     </div>
 
     <div class="view-all">
-      <a href={`${import.meta.env.BASE_URL}blog`}>
-        View all articles →
-      </a>
+      <a href={`${base}blog/`}>View all articles →</a>
     </div>
   </section>
 </BaseLayout>
