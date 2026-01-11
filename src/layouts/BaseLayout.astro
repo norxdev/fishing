@@ -1,26 +1,22 @@
 ---
-// src/layouts/BaseLayout.astro
-const { title } = Astro.props;
-const BASE_URL = import.meta.env.BASE_URL || '/';
+// BaseLayout.astro
+const { title = '', description = '' } = Astro.props;
 ---
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ? `${title} | Top Water Angler` : 'Top Water Angler'}</title>
-    <meta name="description" content="Top Water Angler – Bass, Redfish, and freshwater fishing tips, tutorials, and gear guides." />
-    <link rel="stylesheet" href={`${BASE_URL}styles/global.css`} />
+    <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container">
-        <a class="logo" href={BASE_URL}>Top Water Angler</a>
-        <nav>
-          <ul>
-            <li><a href={BASE_URL}>Home</a></li>
-            <li><a href={`${BASE_URL}blog/`}>Blog</a></li>
-          </ul>
+    <header>
+      <div class="header-container">
+        <h1 class="site-title"><a href="/fishing">Top Water Angler</a></h1>
+        <nav class="site-nav">
+          <a href="/fishing">Home</a>
+          <a href="/fishing/blog">Blog</a>
         </nav>
       </div>
     </header>
@@ -29,9 +25,9 @@ const BASE_URL = import.meta.env.BASE_URL || '/';
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="container">
-        &copy; {new Date().getFullYear()} Top Water Angler. All rights reserved.
+    <footer>
+      <div class="footer-container">
+        <p>&copy; {new Date().getFullYear()} Top Water Angler. All rights reserved.</p>
       </div>
     </footer>
   </body>
