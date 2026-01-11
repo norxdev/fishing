@@ -1,152 +1,134 @@
-/* --- Global Reset & Base --- */
-* {
-  box-sizing: border-box;
+/* Global CSS for Top Water Angler */
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f5f5f5;
+  color: #222;
+  line-height: 1.6;
+}
+
+a {
+  color: #00c49f;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-header {
+  background: #0c3c2d;
+  color: white;
+  padding: 1rem 0;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.site-header .logo a {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #f9f9f9;
-  color: #1a1a1a;
-  line-height: 1.6;
-}
-
-/* --- Header --- */
-header {
-  background-color: #00c49f;
+.site-header nav a {
   color: white;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header a {
-  color: white;
-  text-decoration: none;
-  margin-left: 1rem;
   font-weight: 500;
 }
 
-header a:hover {
-  text-decoration: underline;
-}
-
-/* --- Main Content --- */
-main {
+.site-content {
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
 
-/* --- Post Cards (Homepage & Blog Listing) --- */
-.post-card {
-  background: white;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+.site-footer {
+  background: #0c3c2d;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 4rem;
 }
 
-.post-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-.post-card img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-}
-
-.post-card-content {
-  padding: 1rem 1.5rem;
-}
-
-.post-card-content h2,
-.post-card-content h3 {
-  margin-bottom: 0.5rem;
-}
-
-.post-card-content p {
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.post-card-content a {
-  font-weight: 600;
-  color: #00c49f;
-  text-decoration: none;
-}
-
-.post-card-content a:hover {
-  text-decoration: underline;
-}
-
-/* --- Featured Post --- */
-.featured-post img {
-  height: 350px;
-  object-fit: cover;
-}
-
-/* --- Grid Layout --- */
-.grid {
+/* Post grid for homepage/blog list */
+.post-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-/* --- Blog Post Page --- */
+.post-card {
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+}
+
+.post-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.post-card h3 {
+  margin: 1rem;
+}
+
+.post-card p {
+  margin: 0 1rem 1rem;
+  color: #555;
+}
+
+.post-card .button {
+  display: inline-block;
+  margin: 0 1rem 1rem;
+  padding: 0.5rem 1rem;
+  background: #00c49f;
+  color: white;
+  border-radius: 0.25rem;
+  font-weight: bold;
+}
+
+/* Individual post styling */
 .post-header img {
   width: 100%;
-  height: 400px;
+  max-height: 400px;
   object-fit: cover;
   border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
+}
+
+.post-header h1 {
+  margin-top: 1rem;
+  font-size: 2rem;
 }
 
 .post-date {
   color: #555;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0 1rem;
 }
 
 .post-content img {
   max-width: 100%;
-  margin: 1rem 0;
   border-radius: 0.5rem;
-}
-
-.post-content h2, 
-.post-content h3 {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.post-content p {
-  margin-bottom: 1rem;
-}
-
-/* --- Buttons --- */
-.btn {
-  display: inline-block;
-  background-color: #00c49f;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.3rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.btn:hover {
-  background-color: #00b389;
-}
-
-/* --- Footer --- */
-footer {
-  text-align: center;
-  padding: 2rem;
-  color: #777;
-  font-size: 0.9rem;
+  margin: 1rem 0;
 }
