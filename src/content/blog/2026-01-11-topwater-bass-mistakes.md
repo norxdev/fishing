@@ -1,7 +1,7 @@
 ---
 title: "Topwater Bass Mistakes to Avoid"
 description: "Common mistakes anglers make when fishing topwater lures and how to fix them."
-publishDate: "2026-01-11"
+publishDate: 2026-01-11
 image: "https://source.unsplash.com/900x400/?bass,topwater"
 ---
 

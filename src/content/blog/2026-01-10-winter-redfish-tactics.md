@@ -1,7 +1,7 @@
 ---
 title: "Winter Redfish Tactics"
 description: "Proven strategies for catching redfish during the cold winter months."
-publishDate: "2026-01-10"
+publishDate: 2026-01-10
 image: "https://source.unsplash.com/900x400/?redfish,fishing"
 ---
 
