@@ -1,8 +1,13 @@
 ---
-// src/pages/blog/[slug].astro
-import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntryBySlug, getCollection } from 'astro:content';
-const BASE_URL = import.meta.env.BASE_URL || '/';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug }
+  }));
+}
 
 const { slug } = Astro.params;
 const post = await getEntryBySlug('blog', slug);
@@ -12,16 +17,13 @@ if (!post) {
 }
 ---
 
-<BaseLayout title={post.data.title}>
-  <article class="blog-post">
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="post">
+    <img src={post.data.image || "https://source.unsplash.com/1200x500/?fishing"} alt={post.data.title} class="post-image" />
     <h1>{post.data.title}</h1>
-    <p class="post-meta">{new Date(post.data.publishDate).toLocaleDateString()}</p>
-    {post.data.image && <img src={post.data.image} alt={post.data.title} />}
+    <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
     <div class="post-content">
-      <post.Content />
-    </div>
-    <div class="back-home">
-      <a href={BASE_URL} class="btn-primary">Back to Home</a>
+      <astro-content content={post.body} />
     </div>
   </article>
 </BaseLayout>
