@@ -3,24 +3,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const posts = await getCollection('blog');
+const [heroPost, ...otherPosts] = posts.sort((a,b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
 <BaseLayout title="Fishing Blog" description="Latest fishing tips, guides, and tutorials.">
-  <section style="max-width:900px; margin:3rem auto; padding:0 1rem;">
-    <h1 style="font-size:2.5rem; margin-bottom:1rem;">Latest Posts</h1>
+  <section class="hero-post">
+    <a href={`/fishing/blog/${heroPost.slug}/`}>
+      {heroPost.data.image && <img src={heroPost.data.image} alt={heroPost.data.title} />}
+      <h1>{heroPost.data.title}</h1>
+      <p>{heroPost.data.description}</p>
+    </a>
+  </section>
 
-    <div style="display:grid; gap:2rem;">
-      {posts.map((post) => (
-        <article style="padding:1.5rem; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-          <h2 style="margin-bottom:0.5rem;">
-            <a href={`/fishing/blog/${post.slug}/`} style="color:#00c49f; text-decoration:none; font-size:1.5rem;">
-              {post.data.title}
-            </a>
-          </h2>
-          <p style="color:#666; font-size:0.95rem; margin-bottom:1rem;">Published on {post.data.publishDate}</p>
-          {post.data.description && <p>{post.data.description}</p>}
-        </article>
-      ))}
-    </div>
+  <section class="post-grid">
+    {otherPosts.map(post => (
+      <article>
+        <a href={`/fishing/blog/${post.slug}/`}>
+          {post.data.image && <img src={post.data.image} alt={post.data.title} />}
+          <h2>{post.data.title}</h2>
+          <p>{post.data.description}</p>
+        </a>
+        <p class="post-date">{post.data.publishDate}</p>
+      </article>
+    ))}
   </section>
 </BaseLayout>
