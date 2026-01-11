@@ -8,29 +8,31 @@ posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate)
 
 <BaseLayout title="Top Water Angler" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
 
-  <section class="featured-post">
-    {posts.length > 0 && (
-      <div class="card featured">
+  <!-- Featured Post -->
+  {posts.length > 0 && (
+    <section class="featured-post" style="margin-bottom: 3rem;">
+      <div class="post-card">
         <img src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} alt={posts[0].data.title} />
-        <div class="card-content">
+        <div class="post-card-content">
           <h2><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
-          <p class="date">{new Date(posts[0].data.publishDate).toLocaleDateString()}</p>
+          <p class="post-date">{new Date(posts[0].data.publishDate).toLocaleDateString()}</p>
           <p>{posts[0].data.description}</p>
-          <a class="read-more" href={`/fishing/blog/${posts[0].slug}/`}>Read Article →</a>
+          <a class="btn" href={`/fishing/blog/${posts[0].slug}/`}>Read Article →</a>
         </div>
       </div>
-    )}
-  </section>
+    </section>
+  )}
 
-  <section class="posts-grid">
+  <!-- Grid of other posts -->
+  <section class="grid">
     {posts.slice(1).map(post => (
-      <div class="card">
-        <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
-        <div class="card-content">
+      <div class="post-card">
+        <img src={post.data.image || "https://source.unsplash.com/600x350/?fishing"} alt={post.data.title} />
+        <div class="post-card-content">
           <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-          <p class="date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+          <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
           <p>{post.data.description}</p>
-          <a class="read-more" href={`/fishing/blog/${post.slug}/`}>Read Article →</a>
+          <a class="btn" href={`/fishing/blog/${post.slug}/`}>Read →</a>
         </div>
       </div>
     ))}
