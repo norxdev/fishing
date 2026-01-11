@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Markdown from '@astro/types';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -19,11 +18,15 @@ if (!post) throw new Error(`Post not found: ${slug}`);
     <div class="post-header">
       <img src={post.data.image || "https://source.unsplash.com/900x400/?fishing"} alt={post.data.title} />
       <h1>{post.data.title}</h1>
-      <p class="post-date">{post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</p>
+      <p class="post-date">
+        {post.data.publishDate
+          ? new Date(post.data.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+          : ""}
+      </p>
     </div>
 
     <div class="post-content">
-      <Markdown content={post.body} />
+      {post.body} <!-- Astro automatically renders Markdown from content files -->
     </div>
   </article>
 </BaseLayout>
