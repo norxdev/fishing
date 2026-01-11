@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// --- STATIC PATHS ---
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
@@ -10,20 +11,33 @@ export async function getStaticPaths() {
   }));
 }
 
-// props contains post from getStaticPaths
+// --- PROPS ---
 const { post } = Astro.props;
 if (!post) {
   throw new Error(`Post not found`);
 }
+
+// --- SAFE DATE FORMAT ---
+const publishDate = post.data.publishDate
+  ? new Date(post.data.publishDate).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })
+  : '';
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="blog-post">
     <h1>{post.data.title}</h1>
-    <p class="date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
-    <img src={post.data.image || "https://source.unsplash.com/1200x500/?fishing"} alt={post.data.title} />
+    <p class="date">{publishDate}</p>
+    <img 
+      src={post.data.image || "https://source.unsplash.com/1200x500/?fishing"} 
+      alt={post.data.title} 
+      class="post-image" 
+    />
     <div class="post-content">
-      {post.body ? <post.Content /> : <p>{post.data.description}</p>}
+      {post.renderedContent ? (
+        <div innerHTML={post.renderedContent} />
+      ) : (
+        <p>{post.data.description}</p>
+      )}
     </div>
     <a href="/fishing" class="back-home">← Back to Home</a>
   </article>
