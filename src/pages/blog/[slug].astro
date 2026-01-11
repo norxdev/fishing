@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -11,26 +12,23 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title}>
-  <article>
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="post">
     <h1>{post.data.title}</h1>
 
-    <p>
-      <small>
-        {new Date(post.data.date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </small>
+    <p class="post-date">
+      {post.data.publishDate.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}
     </p>
 
-    <Content />
+    <post.Content />
 
-    <p>
+    <p class="back-link">
       <a href={`${Astro.base}blog/`}>← Back to Blog</a>
     </p>
   </article>
