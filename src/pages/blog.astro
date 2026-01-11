@@ -3,34 +3,77 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const posts = await getCollection('blog');
+
+// Sort posts newest first
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<BaseLayout title="Fishing Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
+<BaseLayout title="Top Water Angler Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
 
   <!-- Featured Post -->
   {posts.length > 0 && (
-    <section style="margin-bottom: 3rem;">
-      <div style="display:flex; flex-direction:column; background:white; border-radius:0.5rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-        <img src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} alt={posts[0].data.title} style="width:100%; object-fit:cover; height:350px;" />
-        <div style="padding:1.5rem;">
-          <h2 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
-          <p style="color:#555; margin:0 0 1rem;">{posts[0].data.publishDate}</p>
-          <p style="margin:0 0 0.5rem;">{posts[0].data.description}</p>
-          <a href={`/fishing/blog/${posts[0].slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
+    <section class="featured-post">
+      <div class="card featured">
+        <img 
+          src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} 
+          alt={posts[0].data.title} 
+        />
+        <div class="card-content">
+          <h2>
+            <a href={`${import.meta.env.BASE_URL}blog/${posts[0].slug}/`}>
+              {posts[0].data.title}
+            </a>
+          </h2>
+          <p class="date">
+            {new Date(posts[0].data.publishDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p class="description">{posts[0].data.description}</p>
+          <a 
+            class="read-more" 
+            href={`${import.meta.env.BASE_URL}blog/${posts[0].slug}/`}
+            aria-label={`Read more about ${posts[0].data.title}`}
+          >
+            Read More →
+          </a>
         </div>
       </div>
     </section>
   )}
 
   <!-- Grid of other posts -->
-  <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+  <section class="post-grid">
     {posts.slice(1).map(post => (
-      <div style="background:white; border-radius:0.5rem; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.06); transition: transform 0.2s;">
-        <h3 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-        <p style="color:#555; margin:0 0 0.5rem;">{post.data.publishDate}</p>
-        <p style="margin:0 0 0.5rem;">{post.data.description}</p>
-        <a href={`/fishing/blog/${post.slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
+      <div class="card">
+        <img 
+          src={post.data.image || "https://source.unsplash.com/600x400/?fishing"} 
+          alt={post.data.title} 
+        />
+        <div class="card-content">
+          <h3>
+            <a href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+          </h3>
+          <p class="date">
+            {new Date(post.data.publishDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p class="description">{post.data.description}</p>
+          <a 
+            class="read-more" 
+            href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}
+            aria-label={`Read more about ${post.data.title}`}
+          >
+            Read More →
+          </a>
+        </div>
       </div>
     ))}
   </section>
