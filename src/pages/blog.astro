@@ -6,30 +6,17 @@ const posts = await getCollection('blog');
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<BaseLayout title="Top Water Angler Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
-
-  <main class="blog-page">
-    <h1 class="page-title">All Blog Posts</h1>
-
-    <section class="post-grid">
-      {posts.map(post => (
-        <div class="post-card">
-          <img 
-            src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} 
-            alt={post.data.title} 
-            class="post-card-image"
-          />
-          <div class="post-card-content">
-            <h3 class="post-card-title">
-              <a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a>
-            </h3>
-            <p class="post-card-date">{post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString() : ''}</p>
-            <p class="post-card-description">{post.data.description}</p>
-            <a class="button" href={`/fishing/blog/${post.slug}/`}>Read →</a>
-          </div>
-        </div>
-      ))}
-    </section>
-  </main>
-
+<BaseLayout title="Blog - Top Water Angler" description="All fishing blog posts">
+  <h1>All Blog Posts</h1>
+  <section class="post-grid">
+    {posts.map(post => (
+      <div class="post-card">
+        <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
+        <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
+        <p>{new Date(post.data.publishDate).toLocaleDateString()}</p>
+        <p>{post.data.description}</p>
+        <a class="button" href={`/fishing/blog/${post.slug}/`}>Read →</a>
+      </div>
+    ))}
+  </section>
 </BaseLayout>
