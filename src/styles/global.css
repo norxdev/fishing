@@ -1,82 +1,59 @@
-/* Global Body */
-body {
-  font-family: 'Inter', sans-serif;
-  color: #1a1a1a;
-  line-height: 1.7;
-  background: #f9f9f9;
-  margin: 0;
-  padding: 0;
-}
-
-/* Headings */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-  line-height: 1.3;
-  color: #111;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-/* Links */
-a {
-  color: #00c49f;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-a:hover {
-  color: #008e74;
-}
-
-/* Article styling */
-article {
-  max-width: 720px;
+/* Hero post */
+.hero-post {
+  max-width: 900px;
   margin: 3rem auto;
-  padding: 2rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1rem;
+  text-align: center;
 }
-
-/* Images in posts */
-article img {
+.hero-post img {
   width: 100%;
-  max-height: 400px;
+  height: 400px;
   object-fit: cover;
   border-radius: 8px;
-  margin: 2rem 0;
+  margin-bottom: 1rem;
+}
+.hero-post h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+.hero-post p {
+  font-size: 1.2rem;
+  color: #555;
 }
 
-/* Markdown content */
-.markdown-body p {
-  margin-bottom: 1rem;
-  font-size: 1.05rem;
-  color: #333;
+/* Post grid */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
 }
-.markdown-body ul,
-.markdown-body ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+.post-grid article {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
 }
-.markdown-body blockquote {
-  border-left: 4px solid #00c49f;
-  padding-left: 1rem;
+.post-grid article:hover {
+  transform: translateY(-4px);
+}
+.post-grid img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.post-grid h2 {
+  font-size: 1.3rem;
+  margin: 0.5rem 1rem;
+}
+.post-grid p {
+  margin: 0 1rem 1rem;
   color: #555;
-  margin: 1.5rem 0;
-}
-.markdown-body pre {
-  background: #f4f4f4;
-  padding: 1rem;
-  border-radius: 6px;
-  overflow-x: auto;
-  margin-bottom: 1.5rem;
-}
-.markdown-body code {
-  background: #f4f4f4;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
 }
 .post-date {
-  color: #666;
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0 1rem 1rem;
 }
