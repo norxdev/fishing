@@ -1,7 +1,7 @@
 ---
 title: "Spring Bass Tactics"
 description: "Effective bass fishing strategies as the water warms up in spring."
-publishDate: "2026-01-13"
+date: "2026-01-13"
 image: "https://source.unsplash.com/900x400/?bass,spring"
 ---
 
