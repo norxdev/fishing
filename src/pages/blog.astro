@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const posts = await getCollection('blog');
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
@@ -12,12 +12,14 @@ posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate)
 
   <section class="post-grid">
     {posts.map(post => (
-      <div class="post-card">
+      <div class="card">
         <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
-        <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-        <p class="post-date">{post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</p>
-        <p>{post.data.description}</p>
-        <a class="button" href={`/fishing/blog/${post.slug}/`}>Read →</a>
+        <div class="card-content">
+          <h3><a href={`${Astro.base}blog/${post.slug}/`}>{post.data.title}</a></h3>
+          <p class="date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+          <p>{post.data.description}</p>
+          <a class="button" href={`${Astro.base}blog/${post.slug}/`}>Read →</a>
+        </div>
       </div>
     ))}
   </section>
