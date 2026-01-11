@@ -6,18 +6,18 @@ const posts = await getCollection('blog');
 ---
 
 <BaseLayout title="Fishing Blog" description="Latest fishing tips and guides">
-  <section style="max-width: 1000px; margin:auto;">
-    <h2 style="font-size:2rem; margin-bottom:2rem;">Latest Posts</h2>
+  <section>
+    <h2>Latest Posts</h2>
     <div style="display:grid; gap:2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
       {posts.map(post => (
-        <article style="background:white; padding:1.5rem; border-radius:0.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-          {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; object-fit:cover; margin-bottom:1rem;" />}
-          <h3 style="margin:0 0 0.5rem 0; font-size:1.5rem;">
-            <a href={`/fishing/blog/${post.slug}/`} style="color:#0070f3; text-decoration:none;">{post.data.title}</a>
+        <article class="card">
+          {post.data.image && <img src={post.data.image} alt={post.data.title} />}
+          <h3>
+            <a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a>
           </h3>
-          <p style="color:#777; margin-bottom:1rem; font-size:0.9rem;">Published on {post.data.publishDate}</p>
+          <p style="color:#777; font-size:0.9rem;">Published on {post.data.publishDate}</p>
           <p>{post.data.description}</p>
-          <a href={`/fishing/blog/${post.slug}/`} style="color:#00c49f; font-weight:bold; text-decoration:none;">Read More →</a>
+          <a href={`/fishing/blog/${post.slug}/`}>Read More →</a>
         </article>
       ))}
     </div>
