@@ -1,129 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
+import { getEntryBySlug } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// 1️⃣ Get all posts for static paths
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
-}
-
-// 2️⃣ Get current post based on slug
 const { slug } = Astro.params;
-const posts = await getCollection('blog');
-const post = posts.find((p) => p.slug === slug);
+const post = await getEntryBySlug('blog', slug);
 
 if (!post) {
-  throw new Error('Post not found');
+  throw new Error(`Post not found: ${slug}`);
 }
-
-// 3️⃣ Render the Markdown content to HTML
-const rendered = await post.render();
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{post.data.title} | Fishing Blog</title>
-    <meta name="description" content={post.data.description} />
-    <style>
-      :root {
-        --primary-color: #0070f3;
-        --background: #f4f7f6;
-        --card-bg: #ffffff;
-        --text-color: #111;
-        --secondary-text: #555;
-      }
-
-      body {
-        font-family: sans-serif;
-        max-width: 800px;
-        margin: auto;
-        padding: 2rem;
-        line-height: 1.6;
-        color: var(--text-color);
-        background: var(--background);
-      }
-
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 2rem;
-      }
-
-      header h1 {
-        font-size: 1.8rem;
-        margin: 0;
-      }
-
-      header a.home-button {
-        background: var(--primary-color);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 0.3rem;
-        text-decoration: none;
-        font-weight: bold;
-      }
-
-      header a.home-button:hover {
-        background: #005bb5;
-      }
-
-      h1.post-title {
-        font-size: 2.5rem;
-        margin-bottom: 0.3rem;
-      }
-
-      p.date {
-        color: var(--secondary-text);
-        margin-bottom: 1rem;
-        font-style: italic;
-      }
-
-      article {
-        background: var(--card-bg);
-        padding: 2rem;
-        border-radius: 0.6rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-      }
-
-      img {
-        max-width: 100%;
-        border-radius: 0.5rem;
-        margin: 1rem 0;
-      }
-
-      blockquote {
-        border-left: 4px solid var(--primary-color);
-        padding-left: 1rem;
-        color: var(--secondary-text);
-        margin: 1.5rem 0;
-        font-style: italic;
-      }
-
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Fishing Blog</h1>
-      <a class="home-button" href="/fishing/blog/">Home</a>
-    </header>
-
-    <article>
-      <h1 class="post-title">{post.data.title}</h1>
-      <p class="date">{post.data.publishDate}</p>
-      <div innerHTML={rendered.content}></div>
-    </article>
-  </body>
-</html>
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article style="max-width: 800px; margin: auto; background:white; padding:2rem; border-radius:0.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+    <h1>{post.data.title}</h1>
+    <p style="color:#555;">{post.data.publishDate}</p>
+    {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; object-fit:cover; margin:1rem 0;" />}
+    <div style="line-height:1.7rem;">
+      {post.body}
+    </div>
+    <p style="margin-top:2rem;"><a href="/fishing/" style="font-weight:bold; color:#00c49f;">← Back to Home</a></p>
+  </article>
+</BaseLayout>
