@@ -1,48 +1,24 @@
-/* ===========================
-   CSS RESET
-=========================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+:root {
+  --bg: #0f172a;
+  --bg-light: #111827;
+  --card: #1f2933;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #38bdf8;
+  --radius: 14px;
+  --max-width: 1200px;
 }
 
-html {
-  scroll-behavior: smooth;
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-  background: #f6f7f9;
-  color: #111;
-  line-height: 1.6;
-}
-
-/* ===========================
-   TYPOGRAPHY
-=========================== */
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1.25;
-  margin: 0 0 0.5rem 0;
-  font-weight: 700;
-}
-
-h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-}
-
-h2 {
-  font-size: 1.4rem;
-}
-
-p {
-  margin: 0.5rem 0 0;
-  color: #444;
+  background: linear-gradient(#020617, #020617);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
 }
 
 a {
@@ -50,185 +26,133 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-/* ===========================
-   LAYOUT
-=========================== */
-main {
-  max-width: 1200px;
+.container {
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 3rem 1.25rem;
+  padding: 2rem 1.5rem;
 }
 
-section {
-  margin-bottom: 4rem;
+/* Header */
+.site-header {
+  background: rgba(2, 6, 23, 0.9);
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-/* ===========================
-   HERO
-=========================== */
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 3rem;
+.header-inner {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.hero-image img {
-  width: 100%;
-  height: 420px;
-  object-fit: cover;
-  border-radius: 16px;
-  cursor: pointer;
+.logo {
+  font-weight: 800;
+  font-size: 1.2rem;
 }
 
-.hero-text h1 a {
-  text-decoration: none;
+.nav a {
+  margin-left: 1.5rem;
+  color: var(--muted);
 }
 
-.hero-text h1 a:hover {
-  text-decoration: underline;
+.nav a:hover {
+  color: white;
 }
 
-.hero-text p {
-  font-size: 1.05rem;
-  margin-top: 1rem;
-  max-width: 520px;
+/* Hero */
+.hero {
+  padding: 5rem 0 3rem;
+  background: radial-gradient(circle at top, #0ea5e9, transparent 60%);
 }
 
-/* ===========================
-   POST GRID
-=========================== */
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 600px;
+  color: var(--muted);
+}
+
+/* Featured */
+.featured-card {
+  display: block;
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  border-radius: var(--radius);
+  padding: 3rem;
+  margin-top: -2rem;
+  color: white;
+}
+
+.featured-content h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.tag {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+/* Grid */
 .post-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
 }
 
-/* ===========================
-   POST CARD
-=========================== */
 .post-card {
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow:
-    0 6px 24px rgba(0, 0, 0, 0.06),
-    0 2px 6px rgba(0, 0, 0, 0.04);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  background: var(--card);
+  padding: 1.8rem;
+  border-radius: var(--radius);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .post-card:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.1),
-    0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
 }
 
-.post-card-image img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  cursor: pointer;
+.post-card h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
 }
 
-.post-card-content {
-  padding: 1.25rem;
+.post-card p {
+  color: var(--muted);
 }
 
-.post-card-content h2 a {
-  text-decoration: none;
-}
-
-.post-card-content h2 a:hover {
-  text-decoration: underline;
-}
-
-.post-card-content p {
-  font-size: 0.95rem;
-  margin-top: 0.5rem;
-}
-
-/* ===========================
-   BLOG POST PAGE
-=========================== */
-.article-wrapper {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.article-wrapper h1 {
-  margin-bottom: 1rem;
-}
-
-.article-meta {
+.meta {
   font-size: 0.85rem;
-  color: #777;
+  color: var(--muted);
+}
+
+/* Blog post */
+.blog-post h1 {
+  font-size: 2.5rem;
+}
+
+.post-meta {
+  color: var(--muted);
   margin-bottom: 2rem;
 }
 
-.article-content p {
-  margin: 1.2rem 0;
-  font-size: 1.05rem;
+.post-content p {
+  max-width: 720px;
+  margin-bottom: 1.5rem;
 }
 
-.article-content h2 {
+.post-footer {
   margin-top: 3rem;
 }
 
-.article-content img {
-  width: 100%;
-  border-radius: 12px;
-  margin: 2rem 0;
-}
-
-/* ===========================
-   HEADER (if/when added)
-=========================== */
-header {
-  background: #fff;
-  border-bottom: 1px solid #e6e6e6;
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.site-title {
-  font-weight: 800;
-  font-size: 1.1rem;
-}
-
-/* ===========================
-   FOOTER
-=========================== */
-footer {
-  background: #111;
-  color: #aaa;
-  padding: 3rem 1.25rem;
-  text-align: center;
-  font-size: 0.85rem;
-}
-
-/* ===========================
-   RESPONSIVE
-=========================== */
-@media (max-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-image img {
-    height: 320px;
-  }
+/* Footer */
+.site-footer {
+  border-top: 1px solid #1e293b;
+  margin-top: 5rem;
+  color: var(--muted);
 }
