@@ -2,12 +2,21 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// 1️⃣ Required for dynamic routes — tells Astro which pages to generate
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+// 2️⃣ Get slug from URL
 const { slug } = Astro.params;
 
-// Load all posts
+// 3️⃣ Fetch all posts from content collection
 const posts = await getCollection('blog');
 
-// Find the post for this slug
+// 4️⃣ Find the specific post by slug
 const post = posts.find((p) => p.slug === slug);
 
 if (!post) throw new Error(`Post not found: ${slug}`);
@@ -15,17 +24,25 @@ if (!post) throw new Error(`Post not found: ${slug}`);
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article style="max-width:800px; margin:auto; padding:2rem; background:white; border-radius:0.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.08); line-height:1.8; font-family: 'Helvetica Neue', sans-serif;">
+    <!-- Post title -->
     <h1 style="margin-bottom:0.5rem; font-size:2.5rem;">{post.data.title}</h1>
+
+    <!-- Publish date -->
     <p style="color:#777; margin-bottom:1.5rem;">Published on {post.data.publishDate}</p>
 
-    {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; margin:1rem 0;" />}
+    <!-- Optional featured image -->
+    {post.data.image && (
+      <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; margin:1rem 0;" />
+    )}
 
-    <div class="markdown-body">
+    <!-- Markdown content -->
+    <div class="markdown-body" style="font-size:1.1rem; color:#333;">
       {post.body}
     </div>
 
+    <!-- Back to home link -->
     <p style="margin-top:3rem;">
-      <a href="/fishing/" style="font-weight:bold; color:#00c49f;">← Back to Home</a>
+      <a href="/fishing/" style="font-weight:bold; color:#00c49f; text-decoration:none;">← Back to Home</a>
     </p>
   </article>
 </BaseLayout>
