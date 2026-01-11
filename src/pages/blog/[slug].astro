@@ -1,34 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Markdown from '@astro/types';
 
-// Generate paths for all posts
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map(post => ({
-    params: { slug: post.slug },
-  }));
+  return posts.map(post => ({ params: { slug: post.slug } }));
 }
 
-// Load post by slug
 const { slug } = Astro.params;
 const post = await getCollection('blog').then(posts => posts.find(p => p.slug === slug));
 
-if (!post) {
-  throw new Error(`Post not found: ${slug}`);
-}
+if (!post) throw new Error(`Post not found: ${slug}`);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="post-page">
+  <article>
     <div class="post-header">
       <img src={post.data.image || "https://source.unsplash.com/900x400/?fishing"} alt={post.data.title} />
       <h1>{post.data.title}</h1>
-      <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+      <p class="post-date">{post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</p>
     </div>
 
     <div class="post-content">
-      {post.body} 
+      <Markdown content={post.body} />
     </div>
   </article>
 </BaseLayout>
