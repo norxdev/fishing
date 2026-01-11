@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
+
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -11,6 +12,11 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+
+// Safely format date
+const formattedDate = post.data.date
+  ? new Date(post.data.date).toLocaleDateString()
+  : null;
 ---
 
 <BaseLayout
@@ -20,9 +26,9 @@ const { post } = Astro.props;
   <article class="blog-post container">
     <h1>{post.data.title}</h1>
 
-    <p class="post-meta">
-      {post.data.date.toLocaleDateString()}
-    </p>
+    {formattedDate && (
+      <p class="post-meta">{formattedDate}</p>
+    )}
 
     <div class="post-content">
       <post.Content />
