@@ -1,49 +1,50 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
-const posts = (await getCollection('blog'))
-  .sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
-
-const [heroPost, ...rest] = posts;
-const base = import.meta.env.BASE_URL;
+const posts = await getCollection("blog");
+const sorted = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const featured = sorted[0];
+const rest = sorted.slice(1);
 ---
 
-<BaseLayout title="Fishing Blog" description="Fishing tips, tactics, and guides from the water.">
-  <!-- HERO -->
+<BaseLayout
+  title="Norx Fishing – Modern Fishing Strategy"
+  description="Bass, redfish, and inshore fishing tactics. Gear reviews and seasonal strategy."
+>
   <section class="hero">
-    <div class="hero-grid">
-      <a class="hero-image" href={`${base}blog/${heroPost.slug}/`}>
-        <img src={heroPost.data.image} alt={heroPost.data.title} />
-      </a>
-
-      <div class="hero-text">
-        <h1>
-          <a href={`${base}blog/${heroPost.slug}/`}>
-            {heroPost.data.title}
-          </a>
-        </h1>
-        <p>{heroPost.data.description}</p>
-      </div>
+    <div class="container">
+      <h1>Modern Fishing Strategy</h1>
+      <p>Actionable tactics, seasonal breakdowns, and real-world fishing insight.</p>
     </div>
   </section>
 
-  <!-- POST GRID -->
-  <section class="post-grid">
-    {rest.map(post => (
-      <article class="post-card">
-        <a class="post-card-image" href={`${base}blog/${post.slug}/`}>
-          <img src={post.data.image} alt={post.data.title} />
-        </a>
-
-        <div class="post-card-content">
-          <h2>
-            <a href={`${base}blog/${post.slug}/`}>
-              {post.data.title}
-            </a>
-          </h2>
-          <p>{post.data.description}</p>
+  {featured && (
+    <section class="featured-post container">
+      <a
+        class="featured-card"
+        href={`${import.meta.env.BASE_URL}blog/${featured.slug}/`}
+      >
+        <div class="featured-content">
+          <span class="tag">Featured</span>
+          <h2>{featured.data.title}</h2>
+          <p>{featured.data.description}</p>
+          <span class="read-more">Read article →</span>
         </div>
+      </a>
+    </section>
+  )}
+
+  <section class="post-grid container">
+    {rest.map((post) => (
+      <article class="post-card">
+        <a href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+          <span class="meta">
+            {post.data.date.toLocaleDateString()}
+          </span>
+        </a>
       </article>
     ))}
   </section>
