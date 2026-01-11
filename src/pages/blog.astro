@@ -1,39 +1,38 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const posts = await getCollection('blog');
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fishing Blog - Adventures and Tips</title>
-    <meta name="description" content="Read all the latest fishing posts, tips, and stories from our adventures on the water." />
-  </head>
-  <body class="font-sans bg-white text-gray-900">
-    <header class="max-w-4xl mx-auto py-16 text-center">
-      <h1 class="text-4xl font-bold mb-4">Fishing Blog</h1>
-      <p class="text-lg text-gray-700 mb-4">All the latest posts, tips, and stories from our fishing adventures.</p>
-      <a href={`${Astro.base}`} class="inline-block mt-4 text-blue-600 hover:underline">← Back to Home</a>
-    </header>
+<BaseLayout title="Fishing Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
 
-    <main class="max-w-4xl mx-auto px-4">
-      <section class="grid gap-8">
-        {posts.map(post => (
-          <article key={post.slug} class="border-b pb-6">
-            <h2 class="text-2xl font-semibold mb-2">
-              <a href={`${Astro.base}blog/${post.slug}/`} class="text-blue-600 hover:underline">
-                {post.data.title}
-              </a>
-            </h2>
-            <p class="text-gray-600 mb-2">{post.data.publishDate}</p>
-            <p class="text-gray-700">{post.data.description}</p>
-            <a href={`${Astro.base}blog/${post.slug}/`} class="text-blue-600 hover:underline mt-2 inline-block">Read More →</a>
-          </article>
-        ))}
-      </section>
-    </main>
-  </body>
-</html>
+  <!-- Featured Post -->
+  {posts.length > 0 && (
+    <section style="margin-bottom: 3rem;">
+      <div style="display:flex; flex-direction:column; background:white; border-radius:0.5rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <img src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} alt={posts[0].data.title} style="width:100%; object-fit:cover; height:350px;" />
+        <div style="padding:1.5rem;">
+          <h2 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
+          <p style="color:#555; margin:0 0 1rem;">{posts[0].data.publishDate}</p>
+          <p style="margin:0 0 0.5rem;">{posts[0].data.description}</p>
+          <a href={`/fishing/blog/${posts[0].slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Grid of other posts -->
+  <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+    {posts.slice(1).map(post => (
+      <div style="background:white; border-radius:0.5rem; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.06); transition: transform 0.2s;">
+        <h3 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
+        <p style="color:#555; margin:0 0 0.5rem;">{post.data.publishDate}</p>
+        <p style="margin:0 0 0.5rem;">{post.data.description}</p>
+        <a href={`/fishing/blog/${post.slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
+      </div>
+    ))}
+  </section>
+
+</BaseLayout>
