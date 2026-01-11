@@ -3,36 +3,23 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const posts = await getCollection('blog');
-posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<BaseLayout title="Fishing Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
-
-  <!-- Featured Post -->
-  {posts.length > 0 && (
-    <section style="margin-bottom: 3rem;">
-      <div style="display:flex; flex-direction:column; background:white; border-radius:0.5rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
-        <img src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} alt={posts[0].data.title} style="width:100%; object-fit:cover; height:350px;" />
-        <div style="padding:1.5rem;">
-          <h2 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
-          <p style="color:#555; margin:0 0 1rem;">{posts[0].data.publishDate}</p>
-          <p style="margin:0 0 0.5rem;">{posts[0].data.description}</p>
-          <a href={`/fishing/blog/${posts[0].slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- Grid of other posts -->
-  <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
-    {posts.slice(1).map(post => (
-      <div style="background:white; border-radius:0.5rem; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.06); transition: transform 0.2s;">
-        <h3 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-        <p style="color:#555; margin:0 0 0.5rem;">{post.data.publishDate}</p>
-        <p style="margin:0 0 0.5rem;">{post.data.description}</p>
-        <a href={`/fishing/blog/${post.slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
-      </div>
-    ))}
+<BaseLayout title="Fishing Blog" description="Latest fishing tips and guides">
+  <section style="max-width: 1000px; margin:auto;">
+    <h2 style="font-size:2rem; margin-bottom:2rem;">Latest Posts</h2>
+    <div style="display:grid; gap:2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      {posts.map(post => (
+        <article style="background:white; padding:1.5rem; border-radius:0.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+          {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; object-fit:cover; margin-bottom:1rem;" />}
+          <h3 style="margin:0 0 0.5rem 0; font-size:1.5rem;">
+            <a href={`/fishing/blog/${post.slug}/`} style="color:#0070f3; text-decoration:none;">{post.data.title}</a>
+          </h3>
+          <p style="color:#777; margin-bottom:1rem; font-size:0.9rem;">Published on {post.data.publishDate}</p>
+          <p>{post.data.description}</p>
+          <a href={`/fishing/blog/${post.slug}/`} style="color:#00c49f; font-weight:bold; text-decoration:none;">Read More →</a>
+        </article>
+      ))}
+    </div>
   </section>
-
 </BaseLayout>
