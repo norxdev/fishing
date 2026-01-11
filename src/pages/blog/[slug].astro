@@ -30,7 +30,7 @@ if (!post) {
     </div>
 
     <div class="post-content">
-      <post.Content />
+      {await post.render()} <!-- <- This renders the Markdown/MDX content -->
     </div>
   </article>
 </BaseLayout>
