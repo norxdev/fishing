@@ -28,7 +28,8 @@ if (!post) {
     </div>
 
     <div class="post-content">
-      <Astro.content post={post} />
+      <!-- Render Markdown/MDX content -->
+      {post.body ? post.body() : <p>No content available.</p>}
     </div>
   </article>
 </BaseLayout>
