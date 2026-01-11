@@ -1,18 +1,41 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-const posts = (await getCollection("blog"))
-  .filter(p => new Date(p.data.publishDate) <= new Date())
-  .sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
+const posts = await getCollection('blog');
+
+// Sort posts by publishDate descending
+posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<h1>Blog</h1>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - Fishing Adventures</title>
+    <meta name="description" content="All the latest posts, tips, and stories from our fishing adventures." />
+  </head>
+  <body class="font-sans bg-white text-gray-900">
+    <header class="max-w-4xl mx-auto py-16 text-center">
+      <h1 class="text-4xl font-bold mb-4">Fishing Blog</h1>
+      <p class="text-lg text-gray-700">All the latest posts, tips, and stories from our fishing adventures.</p>
+      <a href={`${Astro.base}`} class="inline-block mt-4 text-blue-600 hover:underline">← Back to Home</a>
+    </header>
 
-<ul>
-  {posts.map(post => (
-    <li>
-      <a href={`/blog/${post.slug}`}>{post.data.title}</a>
-      <small> — {post.data.publishDate}</small>
-    </li>
-  ))}
-</ul>
+    <main class="max-w-4xl mx-auto px-4">
+      <section class="grid gap-8">
+        {posts.map(post => (
+          <article key={post.slug} class="border-b pb-6">
+            <h2 class="text-2xl font-semibold mb-2">
+              <a href={`${Astro.base}blog/${post.slug}`} class="text-blue-600 hover:underline">
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="text-gray-600 mb-2">{post.data.publishDate}</p>
+            <p class="text-gray-700">{post.data.description}</p>
+            <a href={`${Astro.base}blog/${post.slug}`} class="text-blue-600 hover:underline mt-2 inline-block">Read More →</a>
+          </article>
+        ))}
+      </section>
+    </main>
+  </body>
+</html>
