@@ -1,12 +1,11 @@
 ---
 import { getEntryBySlug } from 'astro:content';
-import { AstroError } from 'astro';
 
 const { slug } = Astro.params;
 const post = await getEntryBySlug('blog', slug);
 
 if (!post) {
-  throw new AstroError({ status: 404, message: 'Post not found' });
+  throw new Error('Post not found'); // Works with all Astro versions
 }
 ---
 
