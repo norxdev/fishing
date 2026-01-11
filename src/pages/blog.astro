@@ -15,7 +15,7 @@ posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate)
       <div class="post-card">
         <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
         <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-        <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+        <p class="post-date">{post.data.publishDate ? new Date(post.data.publishDate).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : ""}</p>
         <p>{post.data.description}</p>
         <a class="button" href={`/fishing/blog/${post.slug}/`}>Read →</a>
       </div>
