@@ -4,22 +4,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const { slug } = Astro.params;
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.slug },
-  }));
-}
+// Load all posts
+const posts = await getCollection('blog');
 
-// Find the post
-const post = await getCollection('blog').then(posts =>
-  posts.find(p => p.slug === slug)
-);
+// Find the post for this slug
+const post = posts.find((p) => p.slug === slug);
 
 if (!post) throw new Error(`Post not found: ${slug}`);
-
-// Render the Markdown content
-const renderedContent = await Astro.renderContent(post.body);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
@@ -30,7 +21,7 @@ const renderedContent = await Astro.renderContent(post.body);
     {post.data.image && <img src={post.data.image} alt={post.data.title} style="width:100%; border-radius:0.5rem; margin:1rem 0;" />}
 
     <div class="markdown-body">
-      {renderedContent}
+      {post.body}
     </div>
 
     <p style="margin-top:3rem;">
