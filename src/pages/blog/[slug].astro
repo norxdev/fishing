@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Generate static paths
+// Generate paths for all posts
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(post => ({
@@ -10,6 +10,7 @@ export async function getStaticPaths() {
   }));
 }
 
+// Load post by slug
 const { slug } = Astro.params;
 const post = await getCollection('blog').then(posts => posts.find(p => p.slug === slug));
 
@@ -19,7 +20,7 @@ if (!post) {
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <article class="post-article">
+  <article class="post-page">
     <div class="post-header">
       <img src={post.data.image || "https://source.unsplash.com/900x400/?fishing"} alt={post.data.title} />
       <h1>{post.data.title}</h1>
@@ -27,7 +28,7 @@ if (!post) {
     </div>
 
     <div class="post-content">
-      <astro:markdown-content content={post.body} />
+      {post.body} 
     </div>
   </article>
 </BaseLayout>
