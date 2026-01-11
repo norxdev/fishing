@@ -1,31 +1,35 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { slug: post.slug },
+    props: { post },
   }));
 }
 
-const { slug } = Astro.params;
-const posts = await getCollection('blog');
-const post = posts.find((p) => p.slug === slug);
-
-if (!post) throw new Error(`Post not found: ${slug}`);
+const { post } = Astro.props;
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
-  <article>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+>
+  <article class="blog-post container">
     <h1>{post.data.title}</h1>
-    <p class="post-date">Published on {post.data.publishDate}</p>
-    {post.data.image && <img src={post.data.image} alt={post.data.title} />}
-    <div class="markdown-body">
-      {post.body}
-    </div>
-    <p style="margin-top:2rem;">
-      <a href="/fishing/">← Back to Home</a>
+
+    <p class="post-meta">
+      {post.data.date.toLocaleDateString()}
     </p>
+
+    <div class="post-content">
+      <post.Content />
+    </div>
+
+    <div class="post-footer">
+      <a href={import.meta.env.BASE_URL}>← Back to home</a>
+    </div>
   </article>
 </BaseLayout>

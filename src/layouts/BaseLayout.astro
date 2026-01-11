@@ -1,27 +1,38 @@
 ---
-const { title, description } = Astro.props;
+const { title = "Norx Fishing", description = "Modern fishing tactics, gear, and strategy." } = Astro.props;
 ---
 
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="/styles/global.css" />
+
+    <link rel="stylesheet" href={`${import.meta.env.BASE_URL}styles/global.css`} />
   </head>
+
   <body>
-    <header style="background:#fff; padding:1rem 2rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
-      <nav style="max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between;">
-        <a href="/fishing/" style="font-weight:700; font-size:1.5rem; color:#00c49f; text-decoration:none;">Fishing Blog</a>
-      </nav>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href={import.meta.env.BASE_URL} class="logo">Norx Fishing</a>
+        <nav class="nav">
+          <a href={import.meta.env.BASE_URL}>Home</a>
+          <a href={`${import.meta.env.BASE_URL}blog/`}>Blog</a>
+        </nav>
+      </div>
     </header>
-    <main>
+
+    <main class="site-main">
       <slot />
     </main>
-    <footer style="text-align:center; padding:2rem; color:#777; font-size:0.9rem;">
-      &copy; {new Date().getFullYear()} Fishing Blog. All rights reserved.
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© {new Date().getFullYear()} Norx Fishing. Built with Astro.</p>
+      </div>
     </footer>
   </body>
 </html>
