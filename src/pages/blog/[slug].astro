@@ -1,11 +1,21 @@
 ---
-import { getEntryBySlug } from 'astro:content';
+import { getCollection } from 'astro:content';
 
+// Export getStaticPaths for dynamic routing
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+// Get the slug from URL
 const { slug } = Astro.params;
-const post = await getEntryBySlug('blog', slug);
+const posts = await getCollection('blog');
+const post = posts.find((p) => p.slug === slug);
 
 if (!post) {
-  throw new Error('Post not found'); // Works with all Astro versions
+  throw new Error('Post not found'); // fallback for missing post
 }
 ---
 
