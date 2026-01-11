@@ -6,17 +6,20 @@ const posts = await getCollection('blog');
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<BaseLayout title="Blog - Top Water Angler" description="All fishing blog posts">
+<BaseLayout title="Top Water Angler Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
+
   <h1>All Blog Posts</h1>
+
   <section class="post-grid">
     {posts.map(post => (
       <div class="post-card">
         <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
         <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-        <p>{new Date(post.data.publishDate).toLocaleDateString()}</p>
+        <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
         <p>{post.data.description}</p>
         <a class="button" href={`/fishing/blog/${post.slug}/`}>Read →</a>
       </div>
     ))}
   </section>
+
 </BaseLayout>
