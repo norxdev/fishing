@@ -15,6 +15,9 @@ const post = posts.find((p) => p.slug === slug);
 if (!post) {
   throw new Error('Post not found');
 }
+
+// Convert Markdown to HTML for rendering
+const rendered = await post.render();
 ---
 
 <html lang="en">
@@ -88,7 +91,7 @@ if (!post) {
     <article>
       <h1>{post.data.title}</h1>
       <p class="date">{post.data.publishDate}</p>
-      <div innerHTML={post.body}></div>
+      <div innerHTML={rendered.content}></div>
     </article>
   </body>
 </html>
