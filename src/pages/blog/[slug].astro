@@ -1,17 +1,23 @@
 ---
-import { getEntryBySlug } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const { slug } = Astro.params;
-const post = await getEntryBySlug('blog', slug);
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
 
+// props contains post from getStaticPaths
+const { post } = Astro.props;
 if (!post) {
-  throw new Error(`Post not found: ${slug}`);
+  throw new Error(`Post not found`);
 }
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-
   <article class="blog-post">
     <h1>{post.data.title}</h1>
     <p class="date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
@@ -21,5 +27,4 @@ if (!post) {
     </div>
     <a href="/fishing" class="back-home">← Back to Home</a>
   </article>
-
 </BaseLayout>
