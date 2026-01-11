@@ -1,25 +1,22 @@
 ---
-const { title = "Top Water Angler" } = Astro.props;
-const BASE_URL = import.meta.env.BASE_URL || "/";
+// src/layouts/BaseLayout.astro
+const { title } = Astro.props;
+const BASE_URL = import.meta.env.BASE_URL || '/';
 ---
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content="Top Water Angler – Tips, tactics, and guides for bass and redfish anglers." />
+    <title>{title ? `${title} | Top Water Angler` : 'Top Water Angler'}</title>
+    <meta name="description" content="Top Water Angler – Bass, Redfish, and freshwater fishing tips, tutorials, and gear guides." />
     <link rel="stylesheet" href={`${BASE_URL}styles/global.css`} />
   </head>
   <body>
-    <!-- Header -->
     <header class="site-header">
       <div class="container">
-        <h1 class="site-title">
-          <a href={BASE_URL}>Top Water Angler</a>
-        </h1>
-        <nav class="site-nav">
+        <a class="logo" href={BASE_URL}>Top Water Angler</a>
+        <nav>
           <ul>
             <li><a href={BASE_URL}>Home</a></li>
             <li><a href={`${BASE_URL}blog/`}>Blog</a></li>
@@ -28,74 +25,14 @@ const BASE_URL = import.meta.env.BASE_URL || "/";
       </div>
     </header>
 
-    <!-- Main content -->
-    <main class="site-main">
+    <main>
       <slot />
     </main>
 
-    <!-- Footer -->
     <footer class="site-footer">
       <div class="container">
-        <p>&copy; {new Date().getFullYear()} Top Water Angler. All rights reserved.</p>
+        &copy; {new Date().getFullYear()} Top Water Angler. All rights reserved.
       </div>
     </footer>
-
-    <style>
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        line-height: 1.6;
-        background: #fdfdfd;
-        color: #222;
-      }
-
-      .container {
-        max-width: 1024px;
-        margin: 0 auto;
-        padding: 0 1rem;
-      }
-
-      .site-header {
-        background: #0077b6;
-        color: #fff;
-        padding: 1rem 0;
-      }
-
-      .site-title a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 1.8rem;
-        font-weight: bold;
-      }
-
-      .site-nav ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        gap: 1rem;
-        margin: 0;
-      }
-
-      .site-nav a {
-        color: #fff;
-        text-decoration: none;
-        font-weight: 500;
-      }
-
-      .site-nav a:hover {
-        text-decoration: underline;
-      }
-
-      .site-main {
-        padding: 2rem 0;
-      }
-
-      .site-footer {
-        text-align: center;
-        padding: 2rem 0;
-        background: #f1f1f1;
-        color: #555;
-      }
-    </style>
   </body>
 </html>
