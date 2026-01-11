@@ -6,19 +6,22 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ? title + ' | Fishing Blog' : 'Fishing Blog'}</title>
-    <meta name="description" content={description || 'A blog about fishing tips and tactics'} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- Global CSS -->
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
-    <header>
-      <h1><a href="/fishing/">Fishing Blog</a></h1>
+    <header style="background:#fff; padding:1rem 2rem; box-shadow:0 2px 6px rgba(0,0,0,0.05);">
+      <nav style="max-width:1200px; margin:auto; display:flex; align-items:center; justify-content:space-between;">
+        <a href="/fishing/" style="font-weight:700; font-size:1.5rem; color:#00c49f; text-decoration:none;">Fishing Blog</a>
+      </nav>
     </header>
     <main>
       <slot />
     </main>
-    <footer>
-      &copy; 2026 Fishing Blog. All rights reserved.
+    <footer style="text-align:center; padding:2rem; color:#777; font-size:0.9rem;">
+      &copy; {new Date().getFullYear()} Fishing Blog. All rights reserved.
     </footer>
   </body>
 </html>
