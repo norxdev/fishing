@@ -1,75 +1,97 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all blog posts
+const posts = await getCollection('blog');
+
+// Sort newest first
+const sortedPosts = posts
+  .filter(post => !post.data.draft)
+  .sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  );
+
+// Homepage sections
+const featured = sortedPosts.slice(0, 1);
+const latest = sortedPosts.slice(1, 5);
 ---
 
 <BaseLayout
-  title="Top Water Angler – Seasonal Fishing Tactics"
-  description="Bass, redfish, and seasonal fishing tactics that actually work."
+  title="Top Water Angler"
+  description="Seasonal bass fishing tactics, gear breakdowns, and real-world angling advice."
 >
   <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Seasonal Fishing Tactics That Actually Work</h1>
+      <h1>Top Water Angler</h1>
       <p>
-        Real-world bass and inshore strategies — no sponsors, no fluff.
+        Seasonal fishing tactics, gear breakdowns, and real-world advice
+        for anglers who want to catch more fish — not just read about it.
       </p>
-      <a href="/blog" class="btn-primary">Read the Latest Articles</a>
+      <a href={`${import.meta.env.BASE_URL}blog`} class="btn-primary">
+        Read the Blog
+      </a>
     </div>
   </section>
 
-  <!-- FEATURED POSTS -->
-  <section class="featured">
-    <h2>Featured Articles</h2>
+  <!-- FEATURED POST -->
+  {featured.length > 0 && (
+    <section class="featured">
+      <h2>Featured</h2>
+
+      <article class="featured-card">
+        <img
+          src={featured[0].data.image}
+          alt={featured[0].data.title}
+          loading="lazy"
+        />
+        <div class="featured-content">
+          <h3>{featured[0].data.title}</h3>
+          <p>{featured[0].data.description}</p>
+          <a
+            href={`${import.meta.env.BASE_URL}blog/${featured[0].slug}/`}
+            class="read-more"
+          >
+            Read Article →
+          </a>
+        </div>
+      </article>
+    </section>
+  )}
+
+  <!-- LATEST POSTS -->
+  <section class="latest">
+    <h2>Latest Articles</h2>
 
     <div class="card-grid">
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Bass fishing" />
-        <div class="card-body">
-          <span class="tag">Bass</span>
-          <h3>
-            <a href="/blog/2026-01-13-spring-bass-tactics/">
-              Spring Bass Tactics That Consistently Produce
+      {latest.map(post => (
+        <article class="post-card">
+          <img
+            src={post.data.image}
+            alt={post.data.title}
+            loading="lazy"
+          />
+          <div class="card-body">
+            <h3>{post.data.title}</h3>
+            <p>{post.data.description}</p>
+            <a
+              href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}
+              class="read-more"
+            >
+              Read →
             </a>
-          </h3>
-          <p>How to locate pre-spawn bass and choose the right presentations.</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1605902711622-cfb43c44367f" alt="Redfish" />
-        <div class="card-body">
-          <span class="tag">Inshore</span>
-          <h3>
-            <a href="/blog/2026-01-10-winter-redfish-tactics/">
-              Winter Redfish Tactics for Cold Water
-            </a>
-          </h3>
-          <p>Slow down, find deeper water, and trigger reaction bites.</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <img src="https://images.unsplash.com/photo-1544551763-cedc20f2f7b5" alt="Fishing tactics" />
-        <div class="card-body">
-          <span class="tag">Seasonal</span>
-          <h3>
-            <a href="/blog/2026-01-07-cold-front-fishing/">
-              Fishing After a Cold Front: What Changes
-            </a>
-          </h3>
-          <p>Adjust depth, speed, and lure selection when conditions shift.</p>
-        </div>
-      </article>
+          </div>
+        </article>
+      ))}
     </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section class="about">
-    <h2>About Top Water Angler</h2>
-    <p>
-      Top Water Angler exists to document real seasonal patterns, on-the-water
-      adjustments, and tactics that consistently produce fish — without hype
-      or sponsorship bias.
-    </p>
+    <div class="view-all">
+      <a href={`${import.meta.env.BASE_URL}blog`}>
+        View all articles →
+      </a>
+    </div>
   </section>
 </BaseLayout>
