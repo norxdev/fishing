@@ -1,181 +1,38 @@
 ---
 import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
 
 const posts = await getCollection('blog');
-
-// Sort newest first
 posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fishing Blog - Tips & Adventures</title>
-    <meta name="description" content="Catch the latest fishing tips, gear reviews, and adventure stories from the water." />
-    <style>
-      :root {
-        --primary-color: #0070f3;
-        --accent-color: #00c49f;
-        --background: #f4f7f6;
-        --card-bg: #ffffff;
-        --text-color: #111;
-        --secondary-text: #555;
-        --max-width: 1100px;
-      }
+<BaseLayout title="Fishing Blog" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
 
-      body {
-        font-family: 'Helvetica Neue', sans-serif;
-        background: var(--background);
-        margin: 0;
-        color: var(--text-color);
-      }
-
-      header {
-        background: var(--card-bg);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      header h1 {
-        font-size: 2rem;
-        margin: 0;
-      }
-
-      header nav a {
-        margin-left: 1.5rem;
-        text-decoration: none;
-        font-weight: bold;
-        color: var(--primary-color);
-      }
-
-      header nav a:hover {
-        text-decoration: underline;
-      }
-
-      main {
-        max-width: var(--max-width);
-        margin: 2rem auto;
-        padding: 0 1rem;
-      }
-
-      .featured-post {
-        display: flex;
-        flex-direction: column;
-        background: var(--card-bg);
-        border-radius: 0.6rem;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        margin-bottom: 2rem;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .featured-post:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-      }
-
-      .featured-post img {
-        width: 100%;
-        object-fit: cover;
-        height: 350px;
-      }
-
-      .featured-post-content {
-        padding: 1.5rem;
-      }
-
-      .featured-post-content h2 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        font-size: 2rem;
-      }
-
-      .featured-post-content p {
-        margin: 0.5rem 0;
-        color: var(--secondary-text);
-      }
-
-      .read-more {
-        display: inline-block;
-        margin-top: 0.8rem;
-        font-weight: bold;
-        color: var(--accent-color);
-        text-decoration: none;
-      }
-
-      .read-more:hover {
-        text-decoration: underline;
-      }
-
-      .post-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-      }
-
-      .post-card {
-        background: var(--card-bg);
-        border-radius: 0.6rem;
-        padding: 1rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .post-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      }
-
-      .post-card h3 {
-        margin-top: 0;
-        margin-bottom: 0.5rem;
-        font-size: 1.5rem;
-      }
-
-      .post-card p {
-        color: var(--secondary-text);
-        margin-bottom: 0.5rem;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>Fishing Blog</h1>
-      <nav>
-        <a href="/fishing/blog/">Home</a>
-        <a href="/fishing/blog/">Blog</a>
-      </nav>
-    </header>
-
-    <main>
-      <!-- Featured Post: newest -->
-      {posts.length > 0 && (
-        <div class="featured-post">
-          <img src="https://source.unsplash.com/900x350/?fishing,bass" alt={posts[0].data.title} />
-          <div class="featured-post-content">
-            <h2><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
-            <p>{posts[0].data.publishDate}</p>
-            <p>{posts[0].data.description}</p>
-            <a class="read-more" href={`/fishing/blog/${posts[0].slug}/`}>Read More →</a>
-          </div>
+  <!-- Featured Post -->
+  {posts.length > 0 && (
+    <section style="margin-bottom: 3rem;">
+      <div style="display:flex; flex-direction:column; background:white; border-radius:0.5rem; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+        <img src={posts[0].data.image || "https://source.unsplash.com/900x350/?fishing"} alt={posts[0].data.title} style="width:100%; object-fit:cover; height:350px;" />
+        <div style="padding:1.5rem;">
+          <h2 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
+          <p style="color:#555; margin:0 0 1rem;">{posts[0].data.publishDate}</p>
+          <p style="margin:0 0 0.5rem;">{posts[0].data.description}</p>
+          <a href={`/fishing/blog/${posts[0].slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
         </div>
-      )}
-
-      <!-- Other posts -->
-      <div class="post-grid">
-        {posts.slice(1).map(post => (
-          <div class="post-card" key={post.slug}>
-            <h3><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
-            <p>{post.data.publishDate}</p>
-            <p>{post.data.description}</p>
-            <a class="read-more" href={`/fishing/blog/${post.slug}/`}>Read More →</a>
-          </div>
-        ))}
       </div>
-    </main>
-  </body>
-</html>
+    </section>
+  )}
+
+  <!-- Grid of other posts -->
+  <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+    {posts.slice(1).map(post => (
+      <div style="background:white; border-radius:0.5rem; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.06); transition: transform 0.2s;">
+        <h3 style="margin:0 0 0.5rem;"><a href={`/fishing/blog/${post.slug}/`}>{post.data.title}</a></h3>
+        <p style="color:#555; margin:0 0 0.5rem;">{post.data.publishDate}</p>
+        <p style="margin:0 0 0.5rem;">{post.data.description}</p>
+        <a href={`/fishing/blog/${post.slug}/`} style="font-weight:bold; color:#00c49f;">Read More →</a>
+      </div>
+    ))}
+  </section>
+
+</BaseLayout>
