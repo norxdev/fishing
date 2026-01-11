@@ -6,29 +6,44 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
 
 const [heroPost, ...rest] = posts;
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Fishing Blog" description="Fishing tips, tactics, and guides from the water.">
+  <!-- HERO -->
   <section class="hero">
-    <a href={`/blog/${heroPost.slug}/`}>
-      <img src={heroPost.data.image} alt={heroPost.data.title} />
-      <div>
-        <h1>{heroPost.data.title}</h1>
+    <div class="hero-grid">
+      <a class="hero-image" href={`${base}blog/${heroPost.slug}/`}>
+        <img src={heroPost.data.image} alt={heroPost.data.title} />
+      </a>
+
+      <div class="hero-text">
+        <h1>
+          <a href={`${base}blog/${heroPost.slug}/`}>
+            {heroPost.data.title}
+          </a>
+        </h1>
         <p>{heroPost.data.description}</p>
       </div>
-    </a>
+    </div>
   </section>
 
+  <!-- POST GRID -->
   <section class="post-grid">
     {rest.map(post => (
       <article class="post-card">
-        <a href={`/blog/${post.slug}/`}>
+        <a class="post-card-image" href={`${base}blog/${post.slug}/`}>
           <img src={post.data.image} alt={post.data.title} />
-          <div class="post-card-content">
-            <h2>{post.data.title}</h2>
-            <p>{post.data.description}</p>
-          </div>
         </a>
+
+        <div class="post-card-content">
+          <h2>
+            <a href={`${base}blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+          </h2>
+          <p>{post.data.description}</p>
+        </div>
       </article>
     ))}
   </section>
