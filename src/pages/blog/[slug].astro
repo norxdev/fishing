@@ -2,39 +2,43 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// Generate static paths
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map(post => ({
+  return posts.map((post) => ({
     params: { slug: post.slug },
+    props: { post },
   }));
 }
 
-// Get the post for this page
-const { slug } = Astro.params;
-const post = (await getCollection("blog")).find(p => p.slug === slug);
-
-if (!post) {
-  throw new Error(`Post not found: ${slug}`);
-}
-
+const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
-  <article>
-    <div class="post-header">
-      <img src={post.data.image || `${Astro.base}default.jpg`} alt={post.data.title} />
-      <h1>{post.data.title}</h1>
-      <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
-    </div>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+>
+  <article class="post">
+    <img
+      class="post-hero"
+      src={post.data.image}
+      alt={post.data.title}
+    />
 
-    <div class="post-content">
-      <Content />
-    </div>
+    <h1>{post.data.title}</h1>
 
-    <p>
-      <a href={`${Astro.base}blog/`}>← Back to Blog</a>
+    <p class="post-date">
+      {new Date(post.data.publishDate).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })}
+    </p>
+
+    <Content />
+
+    <p style="margin-top:3rem;">
+      <a href="/blog/">← Back to Blog</a>
     </p>
   </article>
 </BaseLayout>
