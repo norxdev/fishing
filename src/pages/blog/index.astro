@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
@@ -11,13 +11,13 @@ posts.sort(
 ---
 
 <BaseLayout
-  title="Top Water Angler"
-  description="Fishing tactics, seasonal strategies, and real-world angling advice."
+  title="Top Water Angler Blog"
+  description="All fishing articles from Top Water Angler."
 >
-  <h1>Latest Articles</h1>
+  <h1>All Articles</h1>
 
   <section class="post-grid">
-    {posts.slice(0, 3).map((post) => (
+    {posts.map((post) => (
       <article class="post-card">
         <img
           src={post.data.image}
@@ -38,8 +38,4 @@ posts.sort(
       </article>
     ))}
   </section>
-
-  <p style="margin-top:3rem;">
-    <a href="/blog/">View all articles →</a>
-  </p>
 </BaseLayout>
