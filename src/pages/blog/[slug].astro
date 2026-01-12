@@ -2,15 +2,15 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
-// Step 1: Generate static paths for all blog posts
+// Generate static paths
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post) => ({
+  return posts.map(post => ({
     params: { slug: post.slug },
   }));
 }
 
-// Step 2: Get the post for this page
+// Get the post for this page
 const { slug } = Astro.params;
 const post = (await getCollection("blog")).find(p => p.slug === slug);
 
@@ -18,24 +18,20 @@ if (!post) {
   throw new Error(`Post not found: ${slug}`);
 }
 
-// Step 3: Render the Markdown content
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title}>
+<BaseLayout title={post.data.title} description={post.data.description}>
   <article>
-    <h1>{post.data.title}</h1>
-    <p>
-      <small>
-        {new Date(post.data.publishDate).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
-      </small>
-    </p>
+    <div class="post-header">
+      <img src={post.data.image || `${Astro.base}default.jpg`} alt={post.data.title} />
+      <h1>{post.data.title}</h1>
+      <p class="post-date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
+    </div>
 
-    <Content />
+    <div class="post-content">
+      <Content />
+    </div>
 
     <p>
       <a href={`${Astro.base}blog/`}>← Back to Blog</a>
