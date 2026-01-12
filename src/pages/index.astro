@@ -1,11 +1,45 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("blog");
+posts.sort(
+  (a, b) =>
+    new Date(b.data.publishDate).getTime() -
+    new Date(a.data.publishDate).getTime()
+);
 ---
 
-<BaseLayout title="Top Water Angler" description="Fishing tips, gear reviews, and adventure stories.">
-  <section class="home-hero">
-    <h1>Welcome to Top Water Angler</h1>
-    <p>Catch the latest fishing tips, gear reviews, and adventure stories.</p>
-    <a class="button" href={`${Astro.base}blog/`}>Read the Blog →</a>
+<BaseLayout
+  title="Top Water Angler"
+  description="Fishing tactics, seasonal strategies, and real-world angling advice."
+>
+  <h1>Latest Articles</h1>
+
+  <section class="post-grid">
+    {posts.slice(0, 3).map((post) => (
+      <article class="post-card">
+        <img
+          src={post.data.image}
+          alt={post.data.title}
+        />
+        <h2>
+          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+        </h2>
+        <p class="post-date">
+          {new Date(post.data.publishDate).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+        <p>{post.data.description}</p>
+        <a class="button" href={`/blog/${post.slug}/`}>Read →</a>
+      </article>
+    ))}
   </section>
+
+  <p style="margin-top:3rem;">
+    <a href="/blog/">View all articles →</a>
+  </p>
 </BaseLayout>
