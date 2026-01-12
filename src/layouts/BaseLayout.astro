@@ -2,25 +2,25 @@
 const { title = "Top Water Angler", description = "" } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- GitHub Pages-safe global CSS -->
-    <link rel="stylesheet" href="/global.css" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- ✅ THIS IS THE CRITICAL LINE -->
+    <link rel="stylesheet" href={`${Astro.base}global.css`} />
   </head>
 
   <body>
     <header class="site-header">
       <div class="container">
-        <a href="/" class="logo">Top Water Angler</a>
+        <a class="logo" href={Astro.base}>Top Water Angler</a>
         <nav>
-          <a href="/">Home</a>
-          <a href="/blog/">Blog</a>
+          <a href={`${Astro.base}blog/`}>Blog</a>
         </nav>
       </div>
     </header>
