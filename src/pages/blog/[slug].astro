@@ -2,25 +2,32 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
+// Step 1: Generate static paths for all blog posts
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
     params: { slug: post.slug },
-    props: { post },
   }));
 }
 
-const { post } = Astro.props;
+// Step 2: Get the post for this page
+const { slug } = Astro.params;
+const post = (await getCollection("blog")).find(p => p.slug === slug);
+
+if (!post) {
+  throw new Error(`Post not found: ${slug}`);
+}
+
+// Step 3: Render the Markdown content
 const { Content } = await post.render();
 ---
 
 <BaseLayout title={post.data.title}>
   <article>
     <h1>{post.data.title}</h1>
-
     <p>
       <small>
-        {new Date(post.data.date).toLocaleDateString("en-US", {
+        {new Date(post.data.publishDate).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
