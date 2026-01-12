@@ -1,39 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-const posts = await getCollection('blog');
-posts.sort((a, b) => new Date(b.data.publishDate) - new Date(a.data.publishDate));
+import BaseLayout from "./layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="Top Water Angler" description="Catch the latest fishing tips, gear reviews, and adventure stories.">
-
-  <section class="featured-post" style="margin-bottom:3rem;">
-    {posts.length > 0 && (
-      <div class="card">
-        <img src={posts[0].data.image || "https://source.unsplash.com/900x400/?fishing"} alt={posts[0].data.title} />
-        <div class="card-content">
-          <h2><a href={`${Astro.base}blog/${posts[0].slug}/`}>{posts[0].data.title}</a></h2>
-          <p class="date">{new Date(posts[0].data.publishDate).toLocaleDateString()}</p>
-          <p>{posts[0].data.description}</p>
-          <a class="button" href={`${Astro.base}blog/${posts[0].slug}/`}>Read →</a>
-        </div>
-      </div>
-    )}
+<BaseLayout title="Top Water Angler" description="Fishing tips, gear reviews, and adventure stories.">
+  <section class="home-hero">
+    <h1>Welcome to Top Water Angler</h1>
+    <p>Catch the latest fishing tips, gear reviews, and adventure stories.</p>
+    <a class="button" href={`${Astro.base}blog/`}>Read the Blog →</a>
   </section>
-
-  <section class="post-grid">
-    {posts.slice(1).map(post => (
-      <div class="card">
-        <img src={post.data.image || "https://source.unsplash.com/600x300/?fishing"} alt={post.data.title} />
-        <div class="card-content">
-          <h3><a href={`${Astro.base}blog/${post.slug}/`}>{post.data.title}</a></h3>
-          <p class="date">{new Date(post.data.publishDate).toLocaleDateString()}</p>
-          <p>{post.data.description}</p>
-          <a class="button" href={`${Astro.base}blog/${post.slug}/`}>Read →</a>
-        </div>
-      </div>
-    ))}
-  </section>
-
 </BaseLayout>
