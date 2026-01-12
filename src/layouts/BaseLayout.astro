@@ -2,7 +2,6 @@
 const { title, description } = Astro.props;
 ---
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,24 +11,19 @@ const { title, description } = Astro.props;
     <link rel="stylesheet" href={`${Astro.base}global.css`} />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container">
-        <h1 class="site-title"><a href={`${Astro.base}`}>Top Water Angler</a></h1>
-        <nav>
-          <a href={`${Astro.base}`}>Home</a>
-          <a href={`${Astro.base}blog/`}>Blog</a>
-        </nav>
-      </div>
+    <header>
+      <nav>
+        <a href={`${Astro.base}`}>Home</a>
+        <a href={`${Astro.base}blog/`}>Blog</a>
+      </nav>
     </header>
 
     <main>
       <slot />
     </main>
 
-    <footer class="site-footer">
-      <div class="container">
-        &copy; {new Date().getFullYear()} Top Water Angler
-      </div>
+    <footer>
+      <p>&copy; {new Date().getFullYear()} Top Water Angler</p>
     </footer>
   </body>
 </html>
