@@ -1,5 +1,5 @@
 ---
-const { title = "Top Water Angler", description = "" } = Astro.props;
+const { title = "Fishing Blog" } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -7,20 +7,20 @@ const { title = "Top Water Angler", description = "" } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>{title}</title>
-    <meta name="description" content={description} />
 
-    <!-- ✅ THIS IS THE CRITICAL LINE -->
-    <link rel="stylesheet" href={`${Astro.base}global.css`} />
+    <!-- Global styles -->
+    <link rel="stylesheet" href="/fishing/global.css" />
   </head>
-
   <body>
-    <header class="site-header">
+    <header>
       <div class="container">
-        <a class="logo" href={Astro.base}>Top Water Angler</a>
+        <h1 class="site-title">
+          <a href="/fishing/">Fishing Blog</a>
+        </h1>
         <nav>
-          <a href={`${Astro.base}blog/`}>Blog</a>
+          <a href="/fishing/">Home</a>
+          <a href="/fishing/blog/">Blog</a>
         </nav>
       </div>
     </header>
@@ -28,5 +28,11 @@ const { title = "Top Water Angler", description = "" } = Astro.props;
     <main class="container">
       <slot />
     </main>
+
+    <footer>
+      <div class="container">
+        © 2026 Fishing Blog
+      </div>
+    </footer>
   </body>
 </html>
