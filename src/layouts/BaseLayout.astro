@@ -5,34 +5,25 @@ const { title = "Fishing Blog" } = Astro.props;
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
 
-    <!-- Global styles -->
     <link rel="stylesheet" href="/fishing/global.css" />
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1 class="site-title">
+    <div class="container">
+      <header>
+        <h1>
           <a href="/fishing/">Fishing Blog</a>
         </h1>
-        <nav>
-          <a href="/fishing/">Home</a>
-          <a href="/fishing/blog/">Blog</a>
-        </nav>
-      </div>
-    </header>
+      </header>
 
-    <main class="container">
       <slot />
-    </main>
 
-    <footer>
-      <div class="container">
-        © 2026 Fishing Blog
-      </div>
-    </footer>
+      <footer>
+        © {new Date().getFullYear()} Fishing Blog
+      </footer>
+    </div>
   </body>
 </html>
