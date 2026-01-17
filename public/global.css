@@ -1,31 +1,179 @@
+/* -----------------------------
+   Base Reset
+------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #0f172a;
-  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.7;
+  background-color: #f9fafb;
+  color: #1f2937;
 }
 
+/* -----------------------------
+   Layout
+------------------------------ */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem;
+}
+
+/* -----------------------------
+   Header / Nav
+------------------------------ */
 header {
-  padding: 1.5rem;
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
 }
 
-a {
-  color: #38bdf8;
+header .container {
+  padding: 1.5rem 1.25rem;
+}
+
+.site-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.site-title a {
   text-decoration: none;
+  color: #111827;
 }
 
-a:hover {
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  margin-right: 1rem;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #374151;
+}
+
+nav a:hover {
+  color: #111827;
   text-decoration: underline;
 }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem;
+/* -----------------------------
+   Blog List
+------------------------------ */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.post-card {
-  padding: 1rem 0;
-  border-bottom: 1px solid #1f2937;
+.post-list li {
+  margin-bottom: 2.25rem;
+  padding-bottom: 2.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-list h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.post-list a {
+  text-decoration: none;
+  color: #111827;
+}
+
+.post-list a:hover {
+  text-decoration: underline;
+}
+
+.post-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* -----------------------------
+   Blog Post Content
+------------------------------ */
+article h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+article h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+}
+
+article h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+}
+
+article p {
+  margin: 1.25rem 0;
+}
+
+article ul,
+article ol {
+  margin: 1.25rem 0 1.25rem 1.5rem;
+}
+
+article li {
+  margin-bottom: 0.5rem;
+}
+
+article a {
+  color: #2563eb;
+}
+
+article a:hover {
+  text-decoration: underline;
+}
+
+/* -----------------------------
+   Footer
+------------------------------ */
+footer {
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+  margin-top: 4rem;
+}
+
+footer .container {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b7280;
+  padding: 2rem 1.25rem;
+}
+
+/* -----------------------------
+   Code Blocks (Optional)
+------------------------------ */
+pre {
+  background: #111827;
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
