@@ -1,37 +1,36 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
 
 const posts = await getCollection("blog");
-posts.sort(
-  (a, b) =>
-    new Date(b.data.publishDate).getTime() -
-    new Date(a.data.publishDate).getTime()
-);
 ---
 
-<BaseLayout title="Fishing Blog">
-  <h1>Fishing Articles</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Fishing Blog</title>
+    <link rel="stylesheet" href="/fishing/style.css" />
+  </head>
 
-  <section class="post-grid">
-    {posts.map((post) => (
-      <article class="post-card">
-        <h2>
-          <a href={`${Astro.base}blog/${post.slug}/`}>
-            {post.data.title}
-          </a>
-        </h2>
+  <body>
+    <header>
+      <div class="container">
+        <a href="/fishing/">← Home</a>
+        <h1>Fishing Articles</h1>
+      </div>
+    </header>
 
-        <p class="meta">
-          {new Date(post.data.publishDate).toLocaleDateString()}
-        </p>
-
-        <p>{post.data.description}</p>
-
-        <a class="read-more" href={`${Astro.base}blog/${post.slug}/`}>
-          Read →
-        </a>
-      </article>
-    ))}
-  </section>
-</BaseLayout>
+    <main class="container">
+      {posts.map((post) => (
+        <article class="post-card">
+          <h2>
+            <a href={`/fishing/blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+          </h2>
+          <p>{post.data.description}</p>
+        </article>
+      ))}
+    </main>
+  </body>
+</html>
