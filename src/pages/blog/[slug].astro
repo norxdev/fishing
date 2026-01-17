@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -14,18 +13,24 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title}>
-  <article class="post">
-    <h1>{post.data.title}</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{post.data.title}</title>
+    <link rel="stylesheet" href="/fishing/style.css" />
+  </head>
 
-    <p class="meta">
-      {new Date(post.data.publishDate).toLocaleDateString()}
-    </p>
+  <body>
+    <header>
+      <div class="container">
+        <a href="/fishing/blog/">← Back to Blog</a>
+      </div>
+    </header>
 
-    <Content />
-
-    <p>
-      <a href={`${Astro.base}blog/`}>← Back to Blog</a>
-    </p>
-  </article>
-</BaseLayout>
+    <main class="container">
+      <h1>{post.data.title}</h1>
+      <Content />
+    </main>
+  </body>
+</html>
