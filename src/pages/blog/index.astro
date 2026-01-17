@@ -1,36 +1,26 @@
 ---
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection("blog");
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Fishing Blog</title>
-    <link rel="stylesheet" href="/fishing/style.css" />
-  </head>
+<BaseLayout title="Blog">
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li>
+        <h2>
+          <a href={`/fishing/blog/${post.slug}/`}>
+            {post.data.title}
+          </a>
+        </h2>
 
-  <body>
-    <header>
-      <div class="container">
-        <a href="/fishing/">← Home</a>
-        <h1>Fishing Articles</h1>
-      </div>
-    </header>
+        <div class="meta">
+          {post.data.date.toLocaleDateString()}
+        </div>
 
-    <main class="container">
-      {posts.map((post) => (
-        <article class="post-card">
-          <h2>
-            <a href={`/fishing/blog/${post.slug}/`}>
-              {post.data.title}
-            </a>
-          </h2>
-          <p>{post.data.description}</p>
-        </article>
-      ))}
-    </main>
-  </body>
-</html>
+        <p>{post.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
