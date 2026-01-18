@@ -1,0 +1,91 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base */
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background-color: #f9f9f9;
+  color: #222;
+  line-height: 1.7;
+}
+
+/* Layout */
+.container {
+  max-width: 720px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.site-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* Post list */
+.post-preview {
+  margin-bottom: 50px;
+}
+
+.post-preview h2 {
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.post-preview small {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.post-preview p {
+  margin: 12px 0;
+}
+
+.post-preview a {
+  color: #0a5c36;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.post-preview a:hover {
+  text-decoration: underline;
+}
+
+/* Divider */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
+}
+
+/* Single post */
+.post-title {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.post-date {
+  color: #777;
+  margin-bottom: 30px;
+}
+
+.post-content p {
+  margin-bottom: 20px;
+}
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 30px;
+  color: #0a5c36;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
