@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fishing Blog</title>
+</head>
+<body>
+
+  <h1>Fishing Blog</h1>
+
+  <div id="posts"></div>
+
+  <script src="posts.js"></script>
+  <script>
+    const container = document.getElementById("posts");
+
+    posts.forEach(post => {
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <h2>${post.title}</h2>
+        <small>${post.date}</small>
+        <p>${post.snippet}</p>
+        <a href="posts/${post.slug}">Read more</a>
+        <hr />
+      `;
+
+      container.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>
