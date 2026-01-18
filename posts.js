@@ -12,3 +12,4 @@ const posts = [
     slug: "second-post.html"
   }
 ];
+ 
