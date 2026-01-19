@@ -89,3 +89,17 @@ hr {
 .back-link:hover {
   text-decoration: underline;
 }
+
+.post-tags {
+  margin: 20px 0 30px;
+}
+
+.post-tags span {
+  display: inline-block;
+  background: #eef3f0;
+  color: #0a5c36;
+  padding: 4px 10px;
+  margin-right: 6px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
